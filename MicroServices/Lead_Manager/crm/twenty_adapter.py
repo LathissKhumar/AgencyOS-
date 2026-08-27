@@ -69,7 +69,6 @@ class TwentyCRMAdapter:
         if not self.enabled:
             return {"synced": False, "reason": "TWENTY_CRM_DISABLED"}
 
-        # 1. Create / Sync Company
         company_res = await self.client.create_company(
             name=lead.company_name,
             domain_name=lead.website_url,
@@ -83,7 +82,6 @@ class TwentyCRMAdapter:
         if twenty_comp_id:
             self._lead_company_map[lead.id] = twenty_comp_id
 
-        # 2. Create / Sync Primary Contact Person
         twenty_person_id = None
         if lead.primary_contact_name:
             parts = lead.primary_contact_name.strip().split(" ", 1)
@@ -163,7 +161,6 @@ class TwentyCRMAdapter:
 
         company_id = self._lead_company_map.get(lead_id)
 
-        # Format clean dialogue body
         dialogue_lines = []
         for t in transcript:
             speaker = t.get("speaker", "unknown").capitalize()

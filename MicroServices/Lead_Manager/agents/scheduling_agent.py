@@ -1,8 +1,3 @@
-"""
-Scheduling Agent for Lead Manager.
-Generates RFC 5545 compliant .ics calendar files.
-"""
-
 from datetime import datetime, timedelta, timezone
 from uuid import uuid4
 

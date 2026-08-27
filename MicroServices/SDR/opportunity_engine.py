@@ -221,7 +221,6 @@ class OpportunityEngine:
                 )
             )
 
-        # Sort offers by priority_score descending
         offers.sort(key=lambda o: o.priority_score, reverse=True)
         return offers
 

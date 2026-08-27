@@ -1,7 +1,3 @@
-"""
-A2A Skills execution handler for Lead Manager.
-"""
-
 from typing import Any
 
 from ..domain.lead import Lead

@@ -1,7 +1,3 @@
-"""
-SEO Issue Query and Filtering Tool
-"""
-
 from collections import defaultdict
 from typing import Any
 
@@ -13,7 +9,6 @@ def filter_issues_tool(
     issue_type: str | None = None,
     url_substring: str | None = None,
 ) -> list[dict[str, Any]]:
-    """Filter issues by category, severity, type or URL substring."""
     filtered = issues
     if category:
         filtered = [
@@ -35,7 +30,6 @@ def filter_issues_tool(
 
 
 def get_issue_summary_tool(issues: list[dict[str, Any]]) -> dict[str, Any]:
-    """Generate a high-level statistical summary of detected issues."""
     by_severity = defaultdict(int)
     by_category = defaultdict(int)
     by_type = defaultdict(int)

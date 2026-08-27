@@ -42,9 +42,7 @@ class TaskRepository:
                     task.id,
                     task.lead_id,
                     task.type,
-                    task.status.value
-                    if hasattr(task.status, "value")
-                    else str(task.status),
+                    task.status.value,
                     task.due_at,
                     task.assigned_to,
                     task.title,
@@ -86,7 +84,7 @@ class TaskRepository:
 
         if status:
             query += " AND status = ?"
-            params.append(status.value if hasattr(status, "value") else str(status))
+            params.append(status.value)
 
         if assigned_to:
             query += " AND assigned_to = ?"
@@ -106,7 +104,7 @@ class TaskRepository:
         status: TaskStatus,
         metadata: dict[str, Any] | None = None,
     ) -> LeadTask | None:
-        status_str = status.value if hasattr(status, "value") else str(status)
+        status_str = status.value
         now_str = utc_now_iso()
 
         async with self.db.get_connection() as conn:

@@ -1,7 +1,3 @@
-"""
-Domain models export for Lead Manager.
-"""
-
 from .activity import LeadActivity
 from .conversation import Conversation
 from .lead import Lead

@@ -3,7 +3,6 @@ Local SEO Analyzer
 Evaluates NAP (Name, Address, Phone) presence, LocalBusiness schema, and geo signals.
 """
 
-import re
 from typing import Any
 
 from ..state import AuditFinding, CategoryAuditResult
@@ -16,25 +15,9 @@ def run_local_audit(pages: list[dict[str, Any]]) -> CategoryAuditResult:
 
     indexable_pages = [p for p in pages if p.get("status_code") == 200]
 
-    # Check phone number patterns (e.g. +1-xxx-xxx-xxxx, (xxx) xxx-xxxx)
-    phone_pattern = re.compile(
-        r"(\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}"
-    )
-    pages_with_phone = []
-
-    # Check LocalBusiness schema
     has_local_schema = False
 
-    # Check Google Maps links
-    pages_with_maps = []
-
     for p in indexable_pages:
-        url = p.get("url", "")
-
-        # Check links for google maps
-        links = p.get("linked_from") or []
-
-        # Check json_ld for LocalBusiness
         for s in p.get("json_ld") or []:
             stype = str(s.get("@type", "") if isinstance(s, dict) else s)
             if "LocalBusiness" in stype or "Store" in stype or "Restaurant" in stype:

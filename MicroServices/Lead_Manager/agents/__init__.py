@@ -1,7 +1,3 @@
-"""
-Agents package export for Lead Manager.
-"""
-
 from .conversation_agent import ConversationAgent
 from .followup_agent import FollowUpAgent
 from .lifecycle_agent import LifecycleAgent

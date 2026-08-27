@@ -29,7 +29,6 @@ class BusinessAnalyzer:
         """
         Gathers live internet context and synthesizes deep business intelligence.
         """
-        # 1. Gather live context from web search
         search_ctx = await DuckDuckGoSearchClient.gather_business_context(
             company_name=company_name,
             location=location,

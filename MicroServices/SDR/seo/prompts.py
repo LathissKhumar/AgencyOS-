@@ -1,7 +1,4 @@
-"""
-SEO Agent Prompts & Reasoning Guidelines
-Contains instructions for technical, on-page, content, schema, local, and performance audits.
-"""
+"""Contains instructions for technical, on-page, content, schema, local, and performance audits."""
 
 SEO_AGENT_SYSTEM_PROMPT = """You are the Senior SEO Architect and Automated Audit Engine for Scrape_the_Verse.
 Your role is to analyze raw crawl evidence collected by LibreCrawl and synthesize actionable, data-backed SEO insights.

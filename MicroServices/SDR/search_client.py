@@ -4,7 +4,7 @@ Zero-budget, no-API-key web search scraper with structured results.
 """
 
 import urllib.parse
-from typing import Any
+from typing import Any, Optional
 
 import httpx
 from bs4 import BeautifulSoup
@@ -106,7 +106,6 @@ class DuckDuckGoSearchClient:
         loc_str = f"in {location}" if location else ""
         ind_str = industry or "business"
 
-        # Search queries
         query_company = f"{company_name} {loc_str} reviews ratings".strip()
         query_competitors = f"top {ind_str} competitors {loc_str}".strip()
 

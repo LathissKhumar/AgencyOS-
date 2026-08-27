@@ -1,7 +1,3 @@
-"""
-Crawled Pages Analysis Tool
-"""
-
 from collections import defaultdict
 from typing import Any
 
@@ -9,12 +5,10 @@ from typing import Any
 def get_pages_by_status_tool(
     pages: list[dict[str, Any]], status_code: int
 ) -> list[dict[str, Any]]:
-    """Return all pages matching a specific HTTP status code."""
     return [p for p in pages if p.get("status_code") == status_code]
 
 
 def find_meta_issues_tool(pages: list[dict[str, Any]]) -> dict[str, list[str]]:
-    """Identify pages with missing or improper title tags and meta descriptions."""
     missing_title = []
     short_title = []
     long_title = []
@@ -58,7 +52,6 @@ def find_meta_issues_tool(pages: list[dict[str, Any]]) -> dict[str, list[str]]:
 
 
 def find_duplicate_titles_tool(pages: list[dict[str, Any]]) -> dict[str, list[str]]:
-    """Identify duplicate title tags across multiple pages."""
     title_to_urls = defaultdict(list)
     for p in pages:
         title = (p.get("title") or "").strip()

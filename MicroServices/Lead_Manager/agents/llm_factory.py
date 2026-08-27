@@ -1,7 +1,3 @@
-"""
-Unified LLM Factory for Lead Manager.
-"""
-
 import json
 from typing import Any
 
@@ -23,7 +19,6 @@ class LLMClient:
         self.gemini_model = self.settings.GEMINI_MODEL
 
     async def generate(self, prompt: str, system_prompt: str | None = None) -> str:
-        # 1. Try local Ollama
         try:
             payload: dict[str, Any] = {
                 "model": self.ollama_model,
@@ -46,7 +41,6 @@ class LLMClient:
                 f"Ollama call failed ({e}). Attempting fallback if configured..."
             )
 
-        # 2. Try Gemini Cloud Fallback
         if self.gemini_key:
             try:
                 gemini_url = (

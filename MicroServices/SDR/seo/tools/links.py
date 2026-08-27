@@ -1,13 +1,8 @@
-"""
-Link Graph Analysis Tool
-"""
-
 from collections import defaultdict
 from typing import Any
 
 
 def find_broken_links_tool(links: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    """Return all links that returned 4xx or 5xx HTTP status codes."""
     broken = []
     for link in links:
         status = link.get("status_code")
@@ -19,7 +14,6 @@ def find_broken_links_tool(links: list[dict[str, Any]]) -> list[dict[str, Any]]:
 def analyze_link_graph_tool(
     pages: list[dict[str, Any]], links: list[dict[str, Any]]
 ) -> dict[str, Any]:
-    """Calculate link distribution metrics, orphan pages, and in-degree counts."""
     crawled_urls: set[str] = {p.get("url") for p in pages if p.get("url")}
     in_degree = defaultdict(int)
     out_degree = defaultdict(int)

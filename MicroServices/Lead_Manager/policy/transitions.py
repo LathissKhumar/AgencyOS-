@@ -1,7 +1,3 @@
-"""
-Deterministic Transition Policy for Lead Manager.
-"""
-
 from ..config.logging import get_logger
 from ..domain.stage import LeadStage
 

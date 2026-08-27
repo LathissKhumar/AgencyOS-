@@ -1,7 +1,3 @@
-"""
-Event Handlers for Lead Manager.
-"""
-
 from typing import Any
 
 from ..config.logging import get_logger

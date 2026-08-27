@@ -77,7 +77,6 @@ class TwentyLifecycleManager:
             return False
 
         async with self._lock:
-            # Check if already responsive
             if await self.is_crm_responsive():
                 self._is_running = True
                 logger.info("Twenty CRM is already responsive and active.")
@@ -115,7 +114,6 @@ class TwentyLifecycleManager:
                 logger.warning(f"Error launching docker compose: {e}")
                 return False
 
-            # Poll for readiness
             logger.info(
                 f"Waiting up to {max_wait_seconds}s for Twenty CRM to become ready..."
             )
@@ -193,7 +191,6 @@ class TwentyLifecycleManager:
             async with self._lock:
                 self._active_leases = max(0, self._active_leases - 1)
 
-            # Schedule delayed idle shutdown if no leases remain
             delay = (
                 auto_spin_down_delay
                 if auto_spin_down_delay is not None

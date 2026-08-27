@@ -1,7 +1,3 @@
-"""
-Performance & Core Web Vitals Analysis Tool
-"""
-
 from typing import Any
 
 
@@ -10,7 +6,6 @@ def analyze_performance_tool(
     pagespeed_data: list[dict[str, Any]] | None = None,
     slow_threshold_ms: float = 1000.0,
 ) -> dict[str, Any]:
-    """Analyze server response times, render delays, and PageSpeed metrics."""
     response_times = [
         p.get("response_time_ms", 0) for p in pages if p.get("response_time_ms")
     ]

@@ -1,8 +1,3 @@
-"""
-FollowUp Agent for Lead Manager.
-Scans for stale leads and generates follow-up tasks.
-"""
-
 from ..config.logging import get_logger
 from ..config.settings import Settings, get_settings
 from ..domain.task import LeadTask

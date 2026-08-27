@@ -1,4 +1,4 @@
-from typing import Any, Dict
+from typing import Any
 
 
 def is_html_page(p: dict[str, Any]) -> bool:

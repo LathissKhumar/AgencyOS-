@@ -1,7 +1,3 @@
-"""
-Policy package export for Lead Manager.
-"""
-
 from .actions import (
     evaluate_stale_lead,
     get_tasks_for_intent,

@@ -9,8 +9,6 @@ from langchain_ollama import ChatOllama
 from pydantic import BaseModel
 from pydantic_core import PydanticUndefined
 
-load_dotenv()
-
 T = TypeVar("T", bound=BaseModel)
 
 _llm_instance: ChatOllama | None = None
@@ -19,6 +17,9 @@ _llm_instance: ChatOllama | None = None
 def get_llm() -> ChatOllama:
     global _llm_instance
     if _llm_instance is None:
+        # Deferred load: keeps module import free of process-env side effects,
+        # which otherwise leak into other suites sharing this interpreter.
+        load_dotenv()
         base_url = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
         model = os.getenv("OLLAMA_MODEL", "qwen3:4b")
         _llm_instance = ChatOllama(

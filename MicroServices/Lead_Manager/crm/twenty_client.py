@@ -55,13 +55,32 @@ class TwentyCRMClient:
                 )
                 if res.status_code == 200:
                     return True
-                # Check root or rest endpoint as fallback
                 res_root = await client.get(
                     f"{self.base_url}/rest/companies", headers=self._get_headers()
                 )
                 return res_root.status_code in (200, 401, 403)
         except Exception:
             return False
+
+    async def _post_json(self, url: str, payload: dict[str, Any]) -> dict[str, Any]:
+        """Shared POST helper: sends JSON payload, returns unwrapped data or error dict."""
+        try:
+            async with self._client() as client:
+                res = await client.post(url, json=payload, headers=self._get_headers())
+                if res.status_code in (200, 201):
+                    data = res.json()
+                    return data.get("data", data)
+                logger.warning(
+                    f"Twenty CRM POST {url} returned HTTP {res.status_code}: {res.text}"
+                )
+                return {
+                    "success": False,
+                    "status_code": res.status_code,
+                    "error": res.text,
+                }
+        except Exception as e:
+            logger.warning(f"Twenty CRM POST {url} connection error: {e}")
+            return {"success": False, "error": str(e)}
 
     async def create_company(
         self,
@@ -83,25 +102,10 @@ class TwentyCRMClient:
             payload["industry"] = industry
 
         url = f"{self.base_url}/rest/companies"
-        try:
-            async with self._client() as client:
-                res = await client.post(url, json=payload, headers=self._get_headers())
-                if res.status_code in (200, 201):
-                    data = res.json()
-                    logger.info(f"Twenty CRM: Created company '{name}'")
-                    return data.get("data", data)
-                else:
-                    logger.warning(
-                        f"Twenty CRM create_company returned HTTP {res.status_code}: {res.text}"
-                    )
-                    return {
-                        "success": False,
-                        "status_code": res.status_code,
-                        "error": res.text,
-                    }
-        except Exception as e:
-            logger.warning(f"Twenty CRM create_company connection error: {e}")
-            return {"success": False, "error": str(e)}
+        result = await self._post_json(url, payload)
+        if "error" not in result:
+            logger.info(f"Twenty CRM: Created company '{name}'")
+        return result
 
     async def create_person(
         self,
@@ -126,27 +130,12 @@ class TwentyCRMClient:
             payload["companyId"] = company_id
 
         url = f"{self.base_url}/rest/people"
-        try:
-            async with self._client() as client:
-                res = await client.post(url, json=payload, headers=self._get_headers())
-                if res.status_code in (200, 201):
-                    data = res.json()
-                    logger.info(
-                        f"Twenty CRM: Created contact '{first_name} {last_name or ''}'"
-                    )
-                    return data.get("data", data)
-                else:
-                    logger.warning(
-                        f"Twenty CRM create_person returned HTTP {res.status_code}: {res.text}"
-                    )
-                    return {
-                        "success": False,
-                        "status_code": res.status_code,
-                        "error": res.text,
-                    }
-        except Exception as e:
-            logger.warning(f"Twenty CRM create_person connection error: {e}")
-            return {"success": False, "error": str(e)}
+        result = await self._post_json(url, payload)
+        if "error" not in result:
+            logger.info(
+                f"Twenty CRM: Created contact '{first_name} {last_name or ''}'"
+            )
+        return result
 
     async def create_opportunity(
         self,
@@ -172,25 +161,10 @@ class TwentyCRMClient:
             }
 
         url = f"{self.base_url}/rest/opportunities"
-        try:
-            async with self._client() as client:
-                res = await client.post(url, json=payload, headers=self._get_headers())
-                if res.status_code in (200, 201):
-                    data = res.json()
-                    logger.info(f"Twenty CRM: Created opportunity '{name}'")
-                    return data.get("data", data)
-                else:
-                    logger.warning(
-                        f"Twenty CRM create_opportunity returned HTTP {res.status_code}: {res.text}"
-                    )
-                    return {
-                        "success": False,
-                        "status_code": res.status_code,
-                        "error": res.text,
-                    }
-        except Exception as e:
-            logger.warning(f"Twenty CRM create_opportunity connection error: {e}")
-            return {"success": False, "error": str(e)}
+        result = await self._post_json(url, payload)
+        if "error" not in result:
+            logger.info(f"Twenty CRM: Created opportunity '{name}'")
+        return result
 
     async def create_note(
         self,
@@ -209,25 +183,10 @@ class TwentyCRMClient:
             payload["targetableType"] = targetable_type
 
         url = f"{self.base_url}/rest/notes"
-        try:
-            async with self._client() as client:
-                res = await client.post(url, json=payload, headers=self._get_headers())
-                if res.status_code in (200, 201):
-                    data = res.json()
-                    logger.info(f"Twenty CRM: Created note '{title}'")
-                    return data.get("data", data)
-                else:
-                    logger.warning(
-                        f"Twenty CRM create_note returned HTTP {res.status_code}: {res.text}"
-                    )
-                    return {
-                        "success": False,
-                        "status_code": res.status_code,
-                        "error": res.text,
-                    }
-        except Exception as e:
-            logger.warning(f"Twenty CRM create_note connection error: {e}")
-            return {"success": False, "error": str(e)}
+        result = await self._post_json(url, payload)
+        if "error" not in result:
+            logger.info(f"Twenty CRM: Created note '{title}'")
+        return result
 
     async def create_task(
         self,
@@ -252,22 +211,7 @@ class TwentyCRMClient:
             payload["targetableType"] = targetable_type
 
         url = f"{self.base_url}/rest/tasks"
-        try:
-            async with self._client() as client:
-                res = await client.post(url, json=payload, headers=self._get_headers())
-                if res.status_code in (200, 201):
-                    data = res.json()
-                    logger.info(f"Twenty CRM: Created task '{title}'")
-                    return data.get("data", data)
-                else:
-                    logger.warning(
-                        f"Twenty CRM create_task returned HTTP {res.status_code}: {res.text}"
-                    )
-                    return {
-                        "success": False,
-                        "status_code": res.status_code,
-                        "error": res.text,
-                    }
-        except Exception as e:
-            logger.warning(f"Twenty CRM create_task connection error: {e}")
-            return {"success": False, "error": str(e)}
+        result = await self._post_json(url, payload)
+        if "error" not in result:
+            logger.info(f"Twenty CRM: Created task '{title}'")
+        return result

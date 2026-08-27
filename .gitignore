@@ -123,4 +123,5 @@ htmlcov/
 outputs/
 business_analysis_agent/outputs/
 .agents/
+.omo/
 .github/

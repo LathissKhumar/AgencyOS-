@@ -26,11 +26,6 @@ from seo.analyzers.technical import run_technical_audit
 from seo.state import ActionItem, AuditFinding, SEOState
 from seo.tools.crawl import crawl_target_tool
 
-# -----------------------------------------------------------------------------
-# LangGraph Node Handlers
-# -----------------------------------------------------------------------------
-
-
 def crawl_node(state: SEOState) -> SEOState:
     """Executes the headless crawl using LibreCrawl tool."""
     url = state.get("url", "")
@@ -269,11 +264,6 @@ def synthesis_node(state: SEOState) -> SEOState:
     }
 
 
-# -----------------------------------------------------------------------------
-# LangGraph Workflow Construction
-# -----------------------------------------------------------------------------
-
-
 def create_seo_agent():
     """
     Constructs and compiles the LangGraph StateGraph.
@@ -340,11 +330,6 @@ def run_seo_audit(url: str, crawl_options: dict[str, Any] = None) -> SEOState:
 
 from seo.exporter import export_to_excel, export_to_json
 from seo.organizer import organize_website_crawl
-
-# -----------------------------------------------------------------------------
-# CLI Entry Point for SEO Agent
-# -----------------------------------------------------------------------------
-
 
 def main():
     parser = argparse.ArgumentParser(

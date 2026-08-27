@@ -58,9 +58,7 @@ class LeadRepository:
                     lead.primary_contact_name,
                     lead.primary_contact_email,
                     lead.primary_contact_phone,
-                    lead.stage.value
-                    if hasattr(lead.stage, "value")
-                    else str(lead.stage),
+                    lead.stage.value,
                     lead.fit_score,
                     lead.opportunity_score,
                     json.dumps(lead.recommended_services),
@@ -92,7 +90,7 @@ class LeadRepository:
             return None
 
     async def update_stage(self, lead_id: str, new_stage: LeadStage) -> Lead | None:
-        stage_str = new_stage.value if hasattr(new_stage, "value") else str(new_stage)
+        stage_str = new_stage.value
         now_str = utc_now_iso()
         async with self.db.get_connection() as conn:
             await conn.execute(
@@ -140,7 +138,7 @@ class LeadRepository:
         params: list[Any] = []
 
         if stage:
-            stage_str = stage.value if hasattr(stage, "value") else str(stage)
+            stage_str = stage.value
             query += " AND stage = ?"
             params.append(stage_str)
 

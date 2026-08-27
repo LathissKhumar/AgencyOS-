@@ -53,9 +53,7 @@ class MeetingRepository:
                     meeting.scheduled_at,
                     meeting.duration_minutes,
                     meeting.timezone,
-                    meeting.status.value
-                    if hasattr(meeting.status, "value")
-                    else str(meeting.status),
+                    meeting.status.value,
                     meeting.meeting_url,
                     meeting.ics_content,
                     meeting.organizer_email,
@@ -95,7 +93,7 @@ class MeetingRepository:
         scheduled_at: str | None = None,
         ics_content: str | None = None,
     ) -> Meeting | None:
-        status_str = status.value if hasattr(status, "value") else str(status)
+        status_str = status.value
         now_str = utc_now_iso()
 
         async with self.db.get_connection() as conn:

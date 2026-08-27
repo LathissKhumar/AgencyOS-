@@ -10,10 +10,10 @@ from MicroServices.SDR.server import app
 
 
 @pytest.fixture(autouse=True)
-def set_async_lib():
-    token = sniffio.current_async_library_cvar.set("asyncio")
-    yield
-    sniffio.current_async_library_cvar.reset(token)
+def set_async_lib(monkeypatch):
+    # monkeypatch returns a context manager that auto-restores, avoiding
+    # cross-test pollution of the module-level ContextVar in pytest-asyncio.
+    monkeypatch.setattr(sniffio, "current_async_library", lambda: "asyncio")
 
 
 @pytest.mark.asyncio

@@ -67,7 +67,6 @@ class OutreachPreparer:
             else "Clients average +35% higher inbound calls."
         )
 
-        # 1. Email Sequence (3 Touches)
         email_sequence = [
             ColdEmailStep(
                 step_number=1,
@@ -109,7 +108,6 @@ class OutreachPreparer:
             ),
         ]
 
-        # 2. Dynamic Call Script
         cold_call_script = CallScriptStructure(
             gatekeeper_opener=(
                 f"Hi, I'm calling for {name or 'the business owner'}. "
@@ -129,7 +127,6 @@ class OutreachPreparer:
             objection_counters=prompt_pack.objections_and_responses,
         )
 
-        # 3. LinkedIn Notes
         linkedin_connection_note = (
             f"Hi {name}, noticed your work at {company_name}. We ran a complimentary site speed & Local SEO analysis "
             f"for {company_name} and found a couple quick wins for {primary_service}. Happy to connect and share the report!"
@@ -140,7 +137,6 @@ class OutreachPreparer:
             f"Fixing {top_problem} can substantially increase your local search calls. Let me know if you'd like to see the full checklist."
         )
 
-        # 4. SMS / WhatsApp Teaser
         sms_whatsapp_teaser = (
             f"Hi {name}, this is the Growth Team. We ran a complimentary digital audit for {company_name} "
             f"and spotted a quick fix for {top_problem}. Let us know if you'd like the 1-page report sent over!"

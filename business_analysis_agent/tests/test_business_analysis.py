@@ -443,10 +443,8 @@ class TestMockedGraphInvocation:
     @patch("business_analysis.agents.service_analysis.get_structured_llm")
     @patch("business_analysis.agents.business_problem.get_structured_llm")
     @patch("business_analysis.agents.opportunity.get_structured_llm")
-    @patch("business_analysis.agents.business_scoring.get_structured_llm")
     def test_graph_invocation_with_mocks(
         self,
-        mock_scoring_llm,
         mock_opportunity_llm,
         mock_problem_llm,
         mock_service_llm,
@@ -505,17 +503,6 @@ class TestMockedGraphInvocation:
                 estimated_impact="High",
             )
         ]
-
-        mock_scoring_llm.return_value.invoke.return_value = BusinessScore(
-            business_fit=75,
-            digital_need=70,
-            opportunity_value=80,
-            evidence_confidence=85,
-            serviceability=80,
-            overall_score=77,
-            priority=ScoreCategory.HIGH,
-            score_explanation="Test explanation",
-        )
 
         graph = build_business_analysis_graph()
 

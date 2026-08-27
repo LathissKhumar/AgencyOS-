@@ -1,7 +1,3 @@
-"""
-LibreCrawl Execution Tool for LangGraph Agent
-"""
-
 import os
 import sys
 from typing import Any
@@ -32,9 +28,6 @@ def crawl_target_tool(
     concurrency: int = 5,
     timeout: int = 30,
 ) -> dict[str, Any]:
-    """
-    Executes a headless crawl using LibreCrawl and returns the normalized JSON result.
-    """
     is_valid, msg = validate_url(url)
     if not is_valid:
         return format_error_result("INVALID_URL", msg, {"url": url})

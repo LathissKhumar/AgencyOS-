@@ -47,14 +47,12 @@ class ProposalGenerator:
         top_offers = offers[:3]
         total_setup = sum(o.estimated_price_usd for o in top_offers)
 
-        # 1. Executive Summary
         exec_summary = (
             f"Digital Growth Proposal for {company_name}.\n"
             f"Based on our technical crawl of {website_url or 'your commercial footprint'} and local market benchmarking, "
             f"we identified {len(top_offers)} high-impact opportunities to eliminate customer drop-off and capture market share."
         )
 
-        # 2. Audit Breakdown
         current_state = {
             "seo_health_score": seo_data.get("overall_seo_score", 70)
             if seo_data
@@ -65,7 +63,6 @@ class ProposalGenerator:
             else "",
         }
 
-        # 3. Deliverables Checklist
         all_deliverables = []
         for o in top_offers:
             all_deliverables.extend(o.deliverables)
@@ -73,7 +70,6 @@ class ProposalGenerator:
             "Dedicated Analytics Dashboard & Monthly Performance Review"
         )
 
-        # 4. Investment Matrix
         investment_matrix = {
             "primary_package": top_offers[0].service_title
             if top_offers
@@ -87,14 +83,12 @@ class ProposalGenerator:
             ],
         }
 
-        # 5. Next Steps
         next_steps = [
             "1. Confirm strategy on a brief 15-minute alignment call.",
             "2. Access verification & technical deployment sprint (Weeks 1-2).",
             "3. Live testing, Google Search Console indexing, and performance reporting (Weeks 3-4).",
         ]
 
-        # 6. Generate Markdown Document
         md_lines = [
             "# Digital Growth & Optimization Proposal",
             f"**Prepared for:** {company_name}",

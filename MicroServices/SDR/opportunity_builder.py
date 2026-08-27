@@ -22,7 +22,6 @@ class OpportunityBuilder:
         categories = audit_state.get("categories", {})
         issues = audit_state.get("issues", [])
 
-        # 1. WEBSITE REDESIGN / UX OPPORTUNITY
         perf_score = scores.get("performance", 75.0)
         tech_score = scores.get("technical", 80.0)
         combined_design_score = (perf_score + tech_score) / 2.0
@@ -49,7 +48,6 @@ class OpportunityBuilder:
                 }
             )
 
-        # 2. LOCAL SEO OPPORTUNITY
         local_score = scores.get("local", 60.0)
         schema_score = scores.get("schema", 50.0)
         local_evidence = []
@@ -76,7 +74,6 @@ class OpportunityBuilder:
                 }
             )
 
-        # 3. SPEED & CORE WEB VITALS OPTIMIZATION
         if perf_score < 80.0:
             opp_score = round(max(60.0, 100.0 - perf_score), 1)
             opportunities.append(
@@ -91,7 +88,6 @@ class OpportunityBuilder:
                 }
             )
 
-        # 4. CONTENT STRATEGY & ON-PAGE SEO
         content_score = scores.get("content", 70.0)
         onpage_score = scores.get("onpage", 75.0)
         if content_score < 80.0 or onpage_score < 80.0:
@@ -130,7 +126,6 @@ class OpportunityBuilder:
                 }
             )
 
-        # Sort opportunities by score descending
         opportunities.sort(key=lambda x: x["score"], reverse=True)
         if opportunities and not any(o.get("recommended") for o in opportunities):
             opportunities[0]["recommended"] = True

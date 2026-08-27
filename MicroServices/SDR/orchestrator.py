@@ -149,7 +149,6 @@ class SDROrchestrator:
 
             async with httpx.AsyncClient(timeout=30.0) as client:
                 try:
-                    # Create Lead
                     lead_res = await client.post(
                         f"{self.lead_manager_url}/api/v1/leads",
                         json=lead_payload,
@@ -158,7 +157,6 @@ class SDROrchestrator:
                         lead_record = lead_res.json()
                         created_lead_id = lead_record["id"]
 
-                        # Ingest Opportunities
                         opp_payload = [
                             {
                                 "type": o.service_code,

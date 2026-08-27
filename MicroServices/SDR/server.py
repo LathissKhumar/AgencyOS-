@@ -5,7 +5,6 @@ Autonomous Website Audit, SEO Analysis, Opportunity Synthesizer, Proposal Genera
 
 from typing import Any
 
-import sniffio
 from fastapi import FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
@@ -14,27 +13,10 @@ from .orchestrator import SDROrchestrator
 
 app = FastAPI(
     title="AgencyOS SDR Microservice",
-    description="Autonomous Web Crawling (LibreCrawl), 6-domain SEO Auditing, Prompt Generation, Opportunity Synthesis, Proposal Generation, and Outreach Preparation.",
+    description="Autonomous Web Crawling (LibreCrawl), 6-domain SEO Auditing, Prompt Generation, Opportunity Synthesis, Proposal Generator, Outreach Preparation, and A2A Agent.",
     version="1.0.0",
 )
 
-
-class SniffioASGIMiddleware:
-    def __init__(self, app):
-        self.app = app
-
-    async def __call__(self, scope, receive, send):
-        if scope["type"] in ("http", "websocket"):
-            token = sniffio.current_async_library_cvar.set("asyncio")
-            try:
-                await self.app(scope, receive, send)
-            finally:
-                sniffio.current_async_library_cvar.reset(token)
-        else:
-            await self.app(scope, receive, send)
-
-
-app.add_middleware(SniffioASGIMiddleware)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -46,7 +28,6 @@ app.add_middleware(
 orchestrator = SDROrchestrator()
 
 
-# Request / Response Schemas
 class AuditRequest(BaseModel):
     url: str
     max_depth: int = 2

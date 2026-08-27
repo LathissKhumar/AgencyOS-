@@ -100,9 +100,6 @@ class DataNormalizer:
 
     @classmethod
     def clean_website_url(cls, raw_url: str | None) -> tuple[str | None, str | None]:
-        """
-        Cleans and extracts standardized URL and clean domain.
-        """
         if not raw_url or raw_url.strip() in ("", "None", "null", "N/A"):
             return None, None
 
@@ -161,9 +158,6 @@ class DataNormalizer:
     def generate_dedupe_key(
         cls, company_name: str, domain: str | None, phone: str | None
     ) -> str:
-        """
-        Generates deterministic deduplication hash based on domain, phone, or company name.
-        """
         key_parts = []
         if domain:
             key_parts.append(f"domain:{domain.lower()}")
@@ -179,9 +173,6 @@ class DataNormalizer:
 
     @classmethod
     def normalize_lead(cls, raw_lead: dict[str, Any]) -> dict[str, Any]:
-        """
-        Normalizes a raw Lead Finder prospect.
-        """
         company_name = (
             raw_lead.get("company_name") or raw_lead.get("name") or "Unnamed Business"
         ).strip()

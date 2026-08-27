@@ -1,8 +1,3 @@
-"""
-SEO Agent State Schema
-Defines typed state for LangGraph nodes and audit analyzers.
-"""
-
 from typing import Any, TypedDict
 
 

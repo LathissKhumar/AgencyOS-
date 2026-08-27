@@ -1,7 +1,3 @@
-"""
-Task Domain Model.
-"""
-
 from datetime import datetime, timezone
 from typing import Any
 from uuid import uuid4
@@ -36,5 +32,4 @@ class LeadTask(BaseModel):
         return self.model_dump()
 
 
-# Type alias for standard naming
 Task = LeadTask

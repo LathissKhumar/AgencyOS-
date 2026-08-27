@@ -17,8 +17,6 @@ class CTADetector:
         has_phone_cta = False
         has_booking_engine = False
         has_live_chat = False
-        has_lead_magnet = False
-
         total_pages = len(pages)
         cta_buttons_found = []
 
@@ -36,7 +34,6 @@ class CTADetector:
                 if isinstance(l, dict)
             ]
 
-            # Check phone CTA
             if (
                 any("tel:" in l for l in links)
                 or "call us" in text
@@ -44,7 +41,6 @@ class CTADetector:
             ):
                 has_phone_cta = True
 
-            # Check contact / booking forms
             if any(
                 k in text
                 for k in [
@@ -72,7 +68,6 @@ class CTADetector:
             ):
                 has_booking_engine = True
 
-            # Check live chat
             if any(
                 k in text
                 for k in [

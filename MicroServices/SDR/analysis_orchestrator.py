@@ -138,10 +138,6 @@ class AnalysisOrchestrator:
         location: str | None = None,
         industry: str | None = None,
     ) -> dict[str, Any]:
-        """
-        Runs Website/SEO Analysis and Business Analysis concurrently.
-        """
-        # Tasks to run in parallel
         seo_coro = (
             self.run_website_seo_audit(website_url)
             if website_url
@@ -162,7 +158,6 @@ class AnalysisOrchestrator:
             industry=industry,
         )
 
-        # Parallel gather
         seo_data, business_data = await asyncio.gather(seo_coro, business_coro)
 
         return {

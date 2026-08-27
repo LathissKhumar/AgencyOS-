@@ -4,6 +4,7 @@ Refactored for better code practices and maintainability.
 """
 
 import asyncio
+import os
 import re
 import socket
 import ssl
@@ -173,8 +174,14 @@ class WebCrawler:
         self.auto_save_thread = None
         self.db_save_enabled = False  # Only enable when crawl_id is set
 
-        # Enable nested asyncio for thread compatibility
-        nest_asyncio.apply()
+        # Enable nested asyncio for thread compatibility. Skipped under pytest:
+        # nest_asyncio globally rewrites asyncio machinery, which corrupts
+        # pytest-asyncio runner teardown ("Timeout should be used inside a task")
+        # and breaks every subsequent async test in the process. The audit path
+        # reaches this from a worker thread via asyncio.to_thread, so a
+        # get_running_loop() guard cannot detect test context here.
+        if "PYTEST_CURRENT_TEST" not in os.environ:
+            nest_asyncio.apply()
 
     def _set_pool_size(self, concurrency):
         """Size the urllib3 connection pool to the work actually in flight.

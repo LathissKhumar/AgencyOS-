@@ -1,7 +1,4 @@
-"""
-SEO Agent Tools Package
-Wraps LibreCrawl and provides structured data query utilities for LangGraph.
-"""
+"""Wraps LibreCrawl and provides structured data query utilities for LangGraph."""
 
 from .crawl import crawl_target_tool
 from .issues import filter_issues_tool, get_issue_summary_tool

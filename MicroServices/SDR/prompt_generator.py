@@ -6,7 +6,7 @@ a structured, narrative-rich PersonalizedPromptPack using LLM.
 
 from typing import Any
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ValidationError
 
 from MicroServices.Lead_Manager.agents.llm_factory import LLMClient
 
@@ -87,7 +87,7 @@ class PromptGenerator:
         ):
             try:
                 return PersonalizedPromptPack(**llm_result)
-            except Exception:
+            except ValidationError:
                 pass
 
         # Fallback synthesis
